@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "BxbgUl+mN/D54DVVLowRf4GKOW1p3LZs7UqIAG0wfcg=",
+  "Source": "ApiApp",
+  "BasePath": "_content/ApiApp",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

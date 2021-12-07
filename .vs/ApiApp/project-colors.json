@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "e5be4159-666a-4cca-b1af-5fb8b146b8b3": {
+      "ProjectGuid": "e5be4159-666a-4cca-b1af-5fb8b146b8b3",
+      "DisplayName": "ApiApp",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

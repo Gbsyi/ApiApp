@@ -43,6 +43,7 @@ namespace ApiApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string username, string password)
         {
+            
             if(username == null || password == null)
             {
                 return BadRequest("Данные неверны");
@@ -69,6 +70,32 @@ namespace ApiApp.Controllers
             };
 
             return Ok(response);
+        }
+
+        [Route("register")]
+        [HttpPost]
+        public async Task<IActionResult> Register(string name, string password)
+        {
+            if(name == null || password == null)
+            {
+                return BadRequest("Неверные данные");
+            }
+            try
+            {
+                if(_context.Users.FirstOrDefault(x => x.Name == name) != null)
+                {
+                    return StatusCode(409, "Имя занято.");
+                }
+                User user = new User(name, password, new Role[]{ Role.User});
+                user.UserRoles.Append(Role.User);
+                await _context.Users.AddAsync(user);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            return Ok();
         }
 
         [Route("info")]

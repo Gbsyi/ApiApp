@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "v4bOtpCV7g7bQH1hu17l3rgKR3tAJb4z+9ZEApkoCKA=",
+  "Source": "ApiApp",
+  "BasePath": "_content/ApiApp",
+  "Mode": "Default",
+  "ManifestType": "Publish",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -23,9 +23,10 @@ namespace ApiApp
   
 [Авторизация](endpoints/login.md) : ```POST /api/auth/login```  
 [Регистрация](endpoints/register.md) : ```POST /api/auth/register```  
-[Получение данных пользователя](endpoints/info.md) : ```GET /api/auth/info```  
 
 ## Маршруты, требующие авторизации
+[Получение данных пользователя](endpoints/info.md) : ```GET /api/auth/info```  
+  
 [Вывод всех заметок](endpoints/showAllNotes.md) : ```GET /api/notes```  
   
 [Создание заметки](endpoints/createNote.md) : ```POST /api/notes/create```  

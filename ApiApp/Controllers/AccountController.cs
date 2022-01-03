@@ -28,7 +28,8 @@ namespace ApiApp.Controllers
                 {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, user.Name)
                 };
-                foreach(var role in user.UserRoles)
+                claims.Add(new Claim("id", user.Id.ToString()));
+                foreach (var role in user.UserRoles)
                 {
                     claims.Add(new Claim("role", role.ToString()));
                 }
@@ -101,13 +102,30 @@ namespace ApiApp.Controllers
         [Route("info")]
         [Authorize(Roles ="User")]
         [HttpGet]
-        public IActionResult Info()
+        public async Task<IActionResult> Info()
         {
-            var request = User.IsInRole(Role.Client.ToString());
+            ClaimsIdentity identity = User.Identity as ClaimsIdentity;
+            Claim[] claimData = identity.Claims.ToArray();
+            User user = await _context.Users.FirstOrDefaultAsync(x => x.Id == Guid.Parse(claimData[1].Value));
+            
+            var result = new{
+                id = user.Id,
+                username = user.Name,
+                password = user.Password,
+                userRoles = new List<string>()
+            };
+
+            foreach (Role role in Enum.GetValues(typeof(Role)))
+            {
+                if (User.IsInRole(role.ToString()))
+                {
+                    result.userRoles.Add(role.ToString());
+                }
+            }
             
             return Ok(new {
-                message = "Вы авторизованы",
-                obj = request
+                message = "Success",
+                userData = result
             });
         }
 

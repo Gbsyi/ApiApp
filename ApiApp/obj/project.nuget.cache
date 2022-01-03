@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RjGCEP1v0RGyzLxuvnOSFdEusF058MvW/hSb1VJSDOuZCGft9/eg5HAQQHfaBLhljtpDDcGYyZglP8etbVnuGQ==",
+  "dgSpecHash": "NdE6yOdxOCmnIhSEAAbMIeEJ/gCxtxxfjYpkWyLYo14As7hmdYif6+KCqPLDstNYWau9gzAanY0r7HQ2ea4Eog==",
   "success": true,
-  "projectFilePath": "D:\\Projects\\C#\\ASP.NET\\ApiApp\\ApiApp\\ApiApp.csproj",
+  "projectFilePath": "C:\\Users\\yava0\\Source\\Repos\\ApiApp\\ApiApp\\ApiApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\yava0\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.0\\microsoft.aspnetcore.authentication.jwtbearer.6.0.0.nupkg.sha512",
     "C:\\Users\\yava0\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
@@ -27,6 +27,7 @@
     "C:\\Users\\yava0\\.nuget\\packages\\microsoft.identitymodel.tokens\\6.10.0\\microsoft.identitymodel.tokens.6.10.0.nupkg.sha512",
     "C:\\Users\\yava0\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\yava0\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.14.0\\microsoft.visualstudio.azure.containers.tools.targets.1.14.0.nupkg.sha512",
+    "C:\\Users\\yava0\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\yava0\\.nuget\\packages\\npgsql\\6.0.1\\npgsql.6.0.1.nupkg.sha512",
     "C:\\Users\\yava0\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\6.0.1\\npgsql.entityframeworkcore.postgresql.6.0.1.nupkg.sha512",
     "C:\\Users\\yava0\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",

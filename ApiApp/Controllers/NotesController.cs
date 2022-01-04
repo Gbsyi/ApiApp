@@ -68,7 +68,7 @@ namespace ApiApp.Controllers
 
                 await _context.Notes.AddAsync(note);
                 await _context.SaveChangesAsync();
-                return Ok(noteId);
+                return Ok(new { noteId });
             }
             catch(Exception ex)
             {

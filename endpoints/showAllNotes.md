@@ -1,5 +1,5 @@
 # Вывод всех заметок
-**URL** : `/api/auth/notes`  
+**URL** : `/api/notes`  
   
 **Метод** : `GET`  
   

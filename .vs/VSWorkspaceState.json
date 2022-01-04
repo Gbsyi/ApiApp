@@ -1,6 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\ApiApp",
+    "\\ApiApp\\Controllers"
   ],
   "SelectedNode": "\\ApiApp.sln",
   "PreviewInSolutionExplorer": false

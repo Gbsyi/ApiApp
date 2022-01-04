@@ -42,7 +42,7 @@ namespace ApiApp.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex);
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -51,76 +51,101 @@ namespace ApiApp.Controllers
         [Authorize]
         public async Task<IActionResult> CreateNote(string name,string text)
         {
-            ClaimsIdentity identity = User.Identity as ClaimsIdentity;
-            Claim[] claims = identity.Claims.ToArray();
-            Guid userId = Guid.Parse(claims[1].Value);
-            User owner = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
-            Guid noteId = Guid.NewGuid();
-            Note note = new Note() {
-                Id = noteId,
-                Name = name,
-                Text = text,
-                Owner = owner
-            };
-
             try
             {
+                ClaimsIdentity identity = User.Identity as ClaimsIdentity;
+                Claim[] claims = identity.Claims.ToArray();
+                Guid userId = Guid.Parse(claims[1].Value);
+                User owner = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+                Guid noteId = Guid.NewGuid();
+                Note note = new Note()
+                {
+                    Id = noteId,
+                    Name = name,
+                    Text = text,
+                    Owner = owner
+                };
+
                 await _context.Notes.AddAsync(note);
                 await _context.SaveChangesAsync();
                 return Ok(noteId);
             }
             catch(Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, ex.Message);
             }
             
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> ShowNote(Guid id)
         {
-            Note note = await _context.Notes.FirstOrDefaultAsync(x => x.Id == id);
-            if (note == null)
-                return NotFound(id);
-            return Ok(new
+            try
             {
-                note.Id,
-                note.Name,
-                note.Text,
-                owner = User.Identity.Name
-            });
+                Note note = await _context.Notes.FirstOrDefaultAsync(x => x.Id == id && x.Owner.Id == Guid.Parse(User.Claims.ToArray()[1].Value));
+                if (note == null)
+                    return NotFound();
+                return Ok(new
+                {
+                    note.Id,
+                    note.Name,
+                    note.Text,
+                    owner = User.Identity.Name
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteNote(Guid id)
         {
-            Note note = await _context.Notes.FirstOrDefaultAsync(x => x.Id == id);
-            if (note == null)
-                return NotFound();
-            _context.Notes.Remove(note);
-            await _context.SaveChangesAsync();
-            return Ok();
+            try
+            {
+                Note note = await _context.Notes.FirstOrDefaultAsync(x => x.Id == id);
+                if (note == null)
+                    return NotFound();
+                _context.Notes.Remove(note);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> UpdateNote(Guid id, string name, string text)
         {
-            ClaimsIdentity identity = User.Identity as ClaimsIdentity;
-            Claim[] claims = identity.Claims.ToArray();
-            Guid userId = Guid.Parse(claims[1].Value);
-            User owner = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
-            Note note = new Note()
+            try
             {
-                Id = id,
-                Name = name,
-                Text = text,
-                Owner = owner
-            };
-            if (!await _context.Notes.AnyAsync(x => x.Id == id))
-                return NotFound();
-            _context.Notes.Update(note);
-            await _context.SaveChangesAsync();
-            return Ok();
+                ClaimsIdentity identity = User.Identity as ClaimsIdentity;
+                Claim[] claims = identity.Claims.ToArray();
+                Guid userId = Guid.Parse(claims[1].Value);
+                User owner = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+                Note note = new Note()
+                {
+                    Id = id,
+                    Name = name,
+                    Text = text,
+                    Owner = owner
+                };
+                if (!await _context.Notes.AnyAsync(x => x.Id == id))
+                    return NotFound();
+                _context.Notes.Update(note);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

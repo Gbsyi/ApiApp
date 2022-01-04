@@ -47,12 +47,12 @@ namespace ApiApp.Controllers
             
             if(username == null || password == null)
             {
-                return BadRequest("Данные неверны");
+                return BadRequest(new { message = "Неверные данные" });
             }
             ClaimsIdentity identity = await GetIdentity(username, password);
             if (identity == null)
             {
-                return BadRequest("Данные неверны");
+                return BadRequest(new { message = "Неверные данные" });
             }
             DateTime now = DateTime.Now;
             JwtSecurityToken jwt = new JwtSecurityToken(
@@ -79,13 +79,13 @@ namespace ApiApp.Controllers
         {
             if(name == null || password == null)
             {
-                return BadRequest("Неверные данные");
+                return BadRequest(new { message = "Неверные данные" });
             }
             try
             {
                 if(_context.Users.FirstOrDefault(x => x.Name == name) != null)
                 {
-                    return StatusCode(409, "Имя занято.");
+                    return StatusCode(409, new { message = "Имя занято." } );
                 }
                 User user = new User(name, password, new Role[]{ Role.User});
                 user.UserRoles.Append(Role.User);
@@ -104,29 +104,41 @@ namespace ApiApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Info()
         {
-            ClaimsIdentity identity = User.Identity as ClaimsIdentity;
-            Claim[] claimData = identity.Claims.ToArray();
-            User user = await _context.Users.FirstOrDefaultAsync(x => x.Id == Guid.Parse(claimData[1].Value));
-            
-            var result = new{
-                id = user.Id,
-                username = user.Name,
-                password = user.Password,
-                userRoles = new List<string>()
-            };
-
-            foreach (Role role in Enum.GetValues(typeof(Role)))
+            try
             {
-                if (User.IsInRole(role.ToString()))
+                ClaimsIdentity identity = User.Identity as ClaimsIdentity;
+                Claim[] claimData = identity.Claims.ToArray();
+                User user = await _context.Users.FirstOrDefaultAsync(x => x.Id == Guid.Parse(claimData[1].Value));
+                if (user == null)
                 {
-                    result.userRoles.Add(role.ToString());
+                    return NotFound();
                 }
+                var result = new
+                {
+                    id = user.Id,
+                    username = user.Name,
+                    password = user.Password,
+                    userRoles = new List<string>()
+                };
+
+                foreach (Role role in Enum.GetValues(typeof(Role)))
+                {
+                    if (User.IsInRole(role.ToString()))
+                    {
+                        result.userRoles.Add(role.ToString());
+                    }
+                }
+
+                return Ok(new
+                {
+                    message = "Success",
+                    userData = result
+                });
             }
-            
-            return Ok(new {
-                message = "Success",
-                userData = result
-            });
+            catch(Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
     }

@@ -16,20 +16,14 @@
 **Пример ответа** :  
 ````
 {
-    "result": [
-        {
-            "id": "5635fa44-7941-4e33-b2fd-ee8d9289a465",
-            "name": "Hello",
-            "text": "This is note",
-            "owner": "user"
-        },
-        {
-            "id": "4bd56da5-756c-4254-b810-9c8b570f3d33",
-            "name": "Second note",
-            "text": "Second note",
-            "owner": "user"
-        }
-    ]
+  "message": "Success", 
+  "userData": 
+  {
+    "id": "928264c0-030e-4b53-ba77-9860b1bc59d3", 
+    "password": "user", 
+    "userRoles": ["User"], 
+    "username": "user"
+  }
 }
 ````
 
